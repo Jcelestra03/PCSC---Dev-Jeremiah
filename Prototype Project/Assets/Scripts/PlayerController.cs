@@ -13,8 +13,11 @@ public class PlayerController : MonoBehaviour
     private Quaternion zero;
     public bool shooting = false;
     public bool PowerUp1 = false;
+
     public float bulletLifespan = 1;
     public float bulletspeed = 5;
+    public GameObject bullet;
+    private Vector2 mouseposition;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         velocity = MyRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * movmentspeed;
-        
+
 
         groundDetection = new Vector2(transform.position.x, transform.position.y - .51f);
 
@@ -39,17 +42,21 @@ public class PlayerController : MonoBehaviour
             velocity.y = jumpheight;
         }
 
+        mouseposition.x = Input.mousePosition.x;
+        mouseposition.y = Input.mousePosition.y;
+
         MyRB.velocity = velocity;
 
 
-        if (PowerUp1 = true && (shooting = true) && (Input.GetKeyDown(KeyCode.Mouse1)))
+        if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)))
         {
-            Vector3 lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-
-
 
             GameObject b = Instantiate(bullet, gameObject.transform);
             Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>());
+
+            Vector3 lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+
 
             b.GetComponent<Rigidbody2D>().velocity = new Vector2(lookPos.x * bulletspeed, lookPos.y * bulletspeed);
             Destroy(b, bulletLifespan);
