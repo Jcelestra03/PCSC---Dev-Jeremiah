@@ -4,34 +4,53 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D MyRB;
+    private Rigidbody2D myRB;
     private Vector2 velocity;
-    public int movmentspeed = 3;
+    public int movementspeed = 3;
     public float jumpheight = 6.5f;
     private Vector2 groundDetection;
     public float groundDetectDistance = .1f;
     private Quaternion zero;
-    public bool shooting = false;
-    public bool PowerUp1 = false;
+    public bool flip;
+
+
+
+    public bool shooting;
+    //PowerUp1;
+    public bool skate;
+    //PowerUp2;
+    public bool Ram;
+    //PowerUp2;
 
     public float bulletLifespan = 1;
     public float bulletspeed = 5;
     public GameObject bullet;
     private Vector2 mouseposition;
+    public float ammo;
+
+    public float ramspeed;
+
+    public bool powerON;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        MyRB = GetComponent<Rigidbody2D>();
+        myRB = GetComponent<Rigidbody2D>();
         zero = new Quaternion();
-
+        shooting = false;
+        //PowerUp1 = false;
+        skate = false;
+        //PowerUp2 = false;
+        flip = false;
+        ramspeed = 2000;
     }
 
     // Update is called once per frame
     void Update()
     {
-        velocity = MyRB.velocity;
-        velocity.x = Input.GetAxisRaw("Horizontal") * movmentspeed;
+        velocity = myRB.velocity;
+        velocity.x = Input.GetAxisRaw("Horizontal") * movementspeed;
 
 
         groundDetection = new Vector2(transform.position.x, transform.position.y - .51f);
@@ -42,15 +61,37 @@ public class PlayerController : MonoBehaviour
             velocity.y = jumpheight;
         }
 
+        
+
         mouseposition.x = Input.mousePosition.x;
         mouseposition.y = Input.mousePosition.y;
 
-        MyRB.velocity = velocity;
+        if (skate == true)
+            movementspeed = 5;
+        else
+            movementspeed = 3;
 
+        myRB.velocity = velocity;
 
-        if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)))
+        if (myRB.velocity.x < 0)
         {
+            flip = true;
+            ramspeed = -4000;
+        }
 
+        else if (myRB.velocity.x > 0)
+        {
+            flip = false;
+            ramspeed = 4000;
+        }
+
+
+        if (ammo <= 0)
+            shooting = false;
+
+        if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
+        {
+            ammo = ammo - 1;
             GameObject b = Instantiate(bullet, gameObject.transform);
             Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>());
 
@@ -62,14 +103,45 @@ public class PlayerController : MonoBehaviour
             Destroy(b, bulletLifespan);
         }
 
+        if (Ram == true && Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (flip == true)
+            {
+                myRB.AddForce(transform.right * ramspeed, ForceMode2D.Force);
+            }
 
+            if (flip == false)
+            { 
+                myRB.AddForce(transform.right * ramspeed, ForceMode2D.Force);
+            }
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Powerup1")
-            PowerUp1 = true;
+        if (collision.gameObject.name.Contains("Powerup1"))
+        {
+            shooting = true;
+            powerON = true;
+            skate = false;
+            Ram = false;
+            ammo = 5;
+        }
+
        
+        if(collision.gameObject.name.Contains("Powerup2"))
+        {
+            skate = true;
+            powerON = true;
+            shooting = false;
+            Ram = false;
+        }
 
-
+        if (collision.gameObject.name.Contains("Powerup3"))
+        {
+            Ram = true;
+            powerON = true;
+            skate = false;
+            shooting = false;
+        }
     }
 }
