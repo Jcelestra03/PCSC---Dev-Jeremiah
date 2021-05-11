@@ -29,8 +29,10 @@ public class PlayerController : MonoBehaviour
     public float ammo;
 
     public float ramspeed;
+    public bool isramming; 
 
     public bool powerON;
+   
 
 
     // Start is called before the first frame update
@@ -71,18 +73,18 @@ public class PlayerController : MonoBehaviour
         else
             movementspeed = 3;
 
-        myRB.velocity = velocity;
+       
 
         if (myRB.velocity.x < 0)
         {
             flip = true;
-            ramspeed = -4000;
+            ramspeed = -20;
         }
 
         else if (myRB.velocity.x > 0)
         {
             flip = false;
-            ramspeed = 4000;
+            ramspeed = 20;
         }
 
 
@@ -105,16 +107,13 @@ public class PlayerController : MonoBehaviour
 
         if (Ram == true && Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (flip == true)
-            {
-                myRB.AddForce(transform.right * ramspeed, ForceMode2D.Force);
-            }
 
-            if (flip == false)
-            { 
-                myRB.AddForce(transform.right * ramspeed, ForceMode2D.Force);
-            }
+            velocity.x = ramspeed;
+            //StartCoroutine("Ramming");
         }
+
+        myRB.velocity = velocity;
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -142,6 +141,14 @@ public class PlayerController : MonoBehaviour
             powerON = true;
             skate = false;
             shooting = false;
+        }
+    }
+    IEnumerator Ramming()
+    {
+        while(true)
+        {
+           yield return new WaitForSeconds(1);
+            myRB.AddForce(transform.right * ramspeed, ForceMode2D.Force);
         }
     }
 }
