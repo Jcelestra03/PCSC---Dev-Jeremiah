@@ -688,6 +688,7 @@ MonoBehaviour:
   bullet: {fileID: 6852671785968646177, guid: 9e065bdb2025397488c470ddd7a00c35, type: 3}
   ammo: 0
   ramspeed: 0
+  isramming: 0
   powerON: 0
 --- !u!50 &1536664899
 Rigidbody2D:
@@ -766,7 +767,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5696013f8b0c73e45baa350fc6d12784, type: 3}
+  m_Sprite: {fileID: 8975721076584580134, guid: 02d64cebbdb58a64f9d2a70da5c52cdd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
