@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public bool skate;
     //PowerUp2;
     public bool Ram;
+    public bool isRamming;
     //PowerUp2;
 
     public float bulletLifespan = 1;
@@ -28,8 +29,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseposition;
     public float ammo;
 
-    public float ramspeed;
-    public bool isramming; 
+    public float ramspeed = 50;
+    public bool isramming;
+    public float timer;
+    public float timedifference;
+
 
     public bool powerON;
    
@@ -45,7 +49,10 @@ public class PlayerController : MonoBehaviour
         skate = false;
         //PowerUp2 = false;
         flip = false;
-        ramspeed = 2000;
+        ramspeed = 50;
+        timer = 0;
+        timedifference = 1.2f;
+
     }
 
     // Update is called once per frame
@@ -78,13 +85,15 @@ public class PlayerController : MonoBehaviour
         if (myRB.velocity.x < 0)
         {
             flip = true;
-            ramspeed = -20;
+            GetComponent<SpriteRenderer>().flipX = true;
+            ramspeed = -6;
         }
 
         else if (myRB.velocity.x > 0)
         {
             flip = false;
-            ramspeed = 20;
+            GetComponent<SpriteRenderer>().flipX = false;
+            ramspeed = 6;
         }
 
 
@@ -96,7 +105,7 @@ public class PlayerController : MonoBehaviour
             ammo = ammo - 1;
             GameObject b = Instantiate(bullet, gameObject.transform);
             Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>());
-
+            //Physics2D.IgnoreCollision(b.GetComponent<PolygonCollider2D>(), GetComponent<PolygonCollider2D>());
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
 
@@ -107,10 +116,32 @@ public class PlayerController : MonoBehaviour
 
         if (Ram == true && Input.GetKeyDown(KeyCode.Mouse1))
         {
+            isRamming = true;
 
-            velocity.x = ramspeed;
             //StartCoroutine("Ramming");
         }
+        else if (Ram == false)
+            isRamming = false;
+        
+        if (isRamming == true)
+        {
+            movementspeed = 0;
+            timer += Time.deltaTime;
+
+            StartCoroutine("Ramming");
+            if (timer >= timedifference)
+            {
+
+                isRamming = false;
+                timer = 0;
+            }
+        }
+        else if (isRamming == false && skate != true)
+        {
+            movementspeed = 3;
+            
+        }
+            
 
         myRB.velocity = velocity;
 
@@ -143,12 +174,13 @@ public class PlayerController : MonoBehaviour
             shooting = false;
         }
     }
-    IEnumerator Ramming()
+    private IEnumerator Ramming()
     {
-        while(true)
+        while (isRamming == true)
         {
-           yield return new WaitForSeconds(1);
-            myRB.AddForce(transform.right * ramspeed, ForceMode2D.Force);
+            velocity.x = ramspeed;
+            myRB.velocity = velocity;
+            yield return null;
         }
     }
 }
