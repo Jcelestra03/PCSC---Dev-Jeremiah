@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public float groundDetectDistance = .1f;
     private Quaternion zero;
     public bool flip;
-
+    
 
 
     public bool shooting;
@@ -44,8 +44,7 @@ public class PlayerController : MonoBehaviour
 
 
     //ANIMATIONS GO HERE VVVVVVVV
-    public Animator animator;
-
+    private Animator MyAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +59,8 @@ public class PlayerController : MonoBehaviour
         ramspeed = 50;
         timer = 0;
         timedifference = 1.2f;
+        //Animation
+        MyAnimator = GetComponent<Animator>();
 
     }
 
@@ -98,6 +99,7 @@ public class PlayerController : MonoBehaviour
         /////////////////FLIP
         if (myRB.velocity.x < 0)
         {
+            MyAnimator.SetBool("WalkingSide", true);
             flip = true;
             GetComponent<SpriteRenderer>().flipX = true;
             ramspeed = -6;
@@ -105,9 +107,15 @@ public class PlayerController : MonoBehaviour
 
         else if (myRB.velocity.x > 0)
         {
+            MyAnimator.SetBool("WalkingSide", true);
             flip = false;
             GetComponent<SpriteRenderer>().flipX = false;
             ramspeed = 6;
+        }
+
+        else if (myRB.velocity.x == 0)
+        {
+            MyAnimator.SetBool("WalkingSide", false);
         }
 
         /////////////////SHOOTING POWER UP
@@ -138,6 +146,7 @@ public class PlayerController : MonoBehaviour
         
         if (isRamming == true)
         {
+            MyAnimator.SetBool("UsingRam", true);
             movementspeed = 0;
             timer += Time.deltaTime;
 
@@ -151,6 +160,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isRamming == false && skate != true)
         {
+            MyAnimator.SetBool("UsingRam", false);
             movementspeed = 3;
             
         }

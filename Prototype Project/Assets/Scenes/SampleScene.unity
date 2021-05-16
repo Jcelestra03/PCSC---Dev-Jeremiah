@@ -925,7 +925,6 @@ MonoBehaviour:
   attackPoint: {fileID: 0}
   attackRange: 0.05
   powerON: 0
-  animator: {fileID: 0}
 --- !u!50 &1536664899
 Rigidbody2D:
   serializedVersion: 4
@@ -1033,7 +1032,7 @@ Transform:
   m_GameObject: {fileID: 1536664897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 519420032}
   m_Father: {fileID: 0}
@@ -1065,7 +1064,7 @@ Animator:
   m_GameObject: {fileID: 1536664897}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 78c17dc4849d2a34587f0c6d7df16f42, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
