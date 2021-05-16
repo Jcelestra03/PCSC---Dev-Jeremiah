@@ -886,6 +886,7 @@ GameObject:
   - component: {fileID: 1536664898}
   - component: {fileID: 1536664903}
   - component: {fileID: 1536664900}
+  - component: {fileID: 1536664904}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -921,7 +922,10 @@ MonoBehaviour:
   isramming: 0
   timer: 0
   timedifference: 0
+  attackPoint: {fileID: 0}
+  attackRange: 0.05
   powerON: 0
+  animator: {fileID: 0}
 --- !u!50 &1536664899
 Rigidbody2D:
   serializedVersion: 4
@@ -1051,6 +1055,25 @@ CircleCollider2D:
   m_Offset: {x: -0.02468571, y: -0.011740029}
   serializedVersion: 2
   m_Radius: 0.38080022
+--- !u!95 &1536664904
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536664897}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1673956137
 GameObject:
   m_ObjectHideFlags: 0

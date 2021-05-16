@@ -34,9 +34,17 @@ public class PlayerController : MonoBehaviour
     public float timer;
     public float timedifference;
 
+    //Melee section
+    public Transform attackPoint;
+    public float attackRange = .05f;
+
+
 
     public bool powerON;
-   
+
+
+    //ANIMATIONS GO HERE VVVVVVVV
+    public Animator animator;
 
 
     // Start is called before the first frame update
@@ -58,6 +66,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /////////////////BASIC MOVEMENT
         velocity = myRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * movementspeed;
 
@@ -75,13 +84,18 @@ public class PlayerController : MonoBehaviour
         mouseposition.x = Input.mousePosition.x;
         mouseposition.y = Input.mousePosition.y;
 
+        /////////////////SKATE POWER UP
         if (skate == true)
             movementspeed = 5;
         else
             movementspeed = 3;
 
-       
+        if (skate == true && Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Attack();
+        }
 
+        /////////////////FLIP
         if (myRB.velocity.x < 0)
         {
             flip = true;
@@ -96,7 +110,7 @@ public class PlayerController : MonoBehaviour
             ramspeed = 6;
         }
 
-
+        /////////////////SHOOTING POWER UP
         if (ammo <= 0)
             shooting = false;
 
@@ -114,11 +128,10 @@ public class PlayerController : MonoBehaviour
             Destroy(b, bulletLifespan);
         }
 
+        /////////////////SHOPPING CART POWER UP
         if (Ram == true && Input.GetKeyDown(KeyCode.Mouse1))
         {
             isRamming = true;
-
-            //StartCoroutine("Ramming");
         }
         else if (Ram == false)
             isRamming = false;
@@ -182,5 +195,10 @@ public class PlayerController : MonoBehaviour
             myRB.velocity = velocity;
             yield return null;
         }
+    }
+
+    void Attack()
+    {
+
     }
 }
