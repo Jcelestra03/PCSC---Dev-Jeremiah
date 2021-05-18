@@ -6,13 +6,15 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D myRB;
     private Vector2 velocity;
-    public int movementspeed = 3;
+    public int movementspeed = 4;
     public float jumpheight = 6.5f;
     private Vector2 groundDetection;
     public float groundDetectDistance = .1f;
     private Quaternion zero;
     public bool flip;
-    
+
+    //Health
+    public int PHealth;
 
 
     public bool shooting;
@@ -30,7 +32,6 @@ public class PlayerController : MonoBehaviour
     public float ammo;
 
     public float ramspeed = 50;
-    public bool isramming;
     public float timer;
     public float timedifference;
 
@@ -70,9 +71,9 @@ public class PlayerController : MonoBehaviour
         /////////////////BASIC MOVEMENT
         velocity = myRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * movementspeed;
+        
 
-
-        groundDetection = new Vector2(transform.position.x, transform.position.y - .51f);
+        groundDetection = new Vector2(transform.position.x, transform.position.y - 1.1f);
 
         if (Input.GetKeyDown(KeyCode.Space) && Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance))
         {
@@ -85,49 +86,68 @@ public class PlayerController : MonoBehaviour
         mouseposition.x = Input.mousePosition.x;
         mouseposition.y = Input.mousePosition.y;
 
+        /////////////////HEALTH AND DAMAGE
+        
+
+
+
+
+
         /////////////////SKATE POWER UP
         if (skate == true)
-            movementspeed = 5;
+            movementspeed = 7;
         else
-            movementspeed = 3;
+            movementspeed = 4;
 
         if (skate == true && Input.GetKeyDown(KeyCode.Mouse1))
         {
             Attack();
         }
 
+
+
         /////////////////FLIP
         if (myRB.velocity.x < 0)
         {
-            MyAnimator.SetBool("WalkingSide", true);
+            //MyAnimator.SetBool("WalkingSide", true);
             flip = true;
             GetComponent<SpriteRenderer>().flipX = true;
-            ramspeed = -6;
+            ramspeed = -9;
         }
 
         else if (myRB.velocity.x > 0)
         {
-            MyAnimator.SetBool("WalkingSide", true);
+            //MyAnimator.SetBool("WalkingSide", true);
             flip = false;
             GetComponent<SpriteRenderer>().flipX = false;
-            ramspeed = 6;
+            ramspeed = 9;
         }
 
         else if (myRB.velocity.x == 0)
         {
             MyAnimator.SetBool("WalkingSide", false);
         }
-
+        if (isRamming == false)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                MyAnimator.SetBool("WalkingSide", true);
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                MyAnimator.SetBool("WalkingSide", true);
+            }
+        }
         /////////////////SHOOTING POWER UP
-        if (ammo <= 0)
+            if (ammo <= 0)
             shooting = false;
 
         if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
         {
             ammo = ammo - 1;
             GameObject b = Instantiate(bullet, gameObject.transform);
-            Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>());
-            //Physics2D.IgnoreCollision(b.GetComponent<PolygonCollider2D>(), GetComponent<PolygonCollider2D>());
+            //Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>());
+            Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<PolygonCollider2D>());
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
 
@@ -136,39 +156,44 @@ public class PlayerController : MonoBehaviour
             Destroy(b, bulletLifespan);
         }
 
+
+
         /////////////////SHOPPING CART POWER UP
         if (Ram == true && Input.GetKeyDown(KeyCode.Mouse1))
         {
             isRamming = true;
+            MyAnimator.SetBool("UsingRam", true);
         }
         else if (Ram == false)
             isRamming = false;
         
         if (isRamming == true)
         {
-            MyAnimator.SetBool("UsingRam", true);
             movementspeed = 0;
             timer += Time.deltaTime;
 
             StartCoroutine("Ramming");
             if (timer >= timedifference)
             {
-
+                movementspeed = 0;
                 isRamming = false;
                 timer = 0;
             }
+
         }
-        else if (isRamming == false && skate != true)
+        else if (isRamming == false && skate == false)
         {
             MyAnimator.SetBool("UsingRam", false);
-            movementspeed = 3;
-            
+            //StartCoroutine("cooldownRam");
+            movementspeed = 4;
         }
-            
 
         myRB.velocity = velocity;
 
     }
+
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name.Contains("Powerup1"))
@@ -181,7 +206,7 @@ public class PlayerController : MonoBehaviour
         }
 
        
-        if(collision.gameObject.name.Contains("Powerup2"))
+        if(collision.gameObject.name.Contains("Powerup2") && isRamming == false)
         {
             skate = true;
             powerON = true;
@@ -197,13 +222,29 @@ public class PlayerController : MonoBehaviour
             shooting = false;
         }
     }
+
     private IEnumerator Ramming()
     {
         while (isRamming == true)
         {
+            movementspeed = 0;
             velocity.x = ramspeed;
             myRB.velocity = velocity;
             yield return null;
+        }
+    }
+
+    private IEnumerator cooldownRam()
+    {
+        timedifference = .75f;
+        timer = 0;
+        timer += Time.deltaTime;
+            
+        if (timer >= timedifference)
+        {
+            movementspeed = 4;
+            timer = 0;
+            yield return movementspeed;
         }
     }
 
