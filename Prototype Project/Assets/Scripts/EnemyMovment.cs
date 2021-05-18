@@ -9,6 +9,8 @@ public class EnemyMovment : MonoBehaviour
     public bool isfollowing = false;
     public float movementspeed = 5;
     public GameObject playertarget;
+    public float health = 3;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,9 @@ public class EnemyMovment : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipX = true;
         }
         MyRB.velocity = velocity;
+
+        if (health <= 0)
+            Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -52,6 +57,11 @@ public class EnemyMovment : MonoBehaviour
 
         if (isfollowing && (collision.gameObject.name == "Player"))
             isfollowing = false;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Contains("bullet"))
+            health--;
     }
 
 
