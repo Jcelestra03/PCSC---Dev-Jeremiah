@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         timedifference = 1.2f;
         //Animation
         MyAnimator = GetComponent<Animator>();
-
+        PHealth = 10;
     }
 
     // Update is called once per frame
@@ -87,13 +87,21 @@ public class PlayerController : MonoBehaviour
         mouseposition.y = Input.mousePosition.y;
 
         /////////////////HEALTH AND DAMAGE
+        ///
+
         
 
+        if (PHealth <= 0)
+        {
+            PHealth = 10;
 
+        }
 
 
 
         /////////////////SKATE POWER UP
+        ///
+
         if (skate == true)
             movementspeed = 7;
         else
@@ -107,6 +115,8 @@ public class PlayerController : MonoBehaviour
 
 
         /////////////////FLIP
+        ///
+
         if (myRB.velocity.x < 0)
         {
             //MyAnimator.SetBool("WalkingSide", true);
@@ -139,6 +149,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         /////////////////SHOOTING POWER UP
+        ///
+
             if (ammo <= 0)
             shooting = false;
 
@@ -159,6 +171,8 @@ public class PlayerController : MonoBehaviour
 
 
         /////////////////SHOPPING CART POWER UP
+        ///
+
         if (Ram == true && Input.GetKeyDown(KeyCode.Mouse1))
         {
             isRamming = true;
@@ -196,6 +210,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        /////////////////////////PICK UPS
+        ///
+
         if (collision.gameObject.name.Contains("Powerup1"))
         {
             shooting = true;
@@ -220,6 +238,30 @@ public class PlayerController : MonoBehaviour
             powerON = true;
             skate = false;
             shooting = false;
+        }
+
+        //////////////////////////PLAYER DAMAGE 
+        ///
+
+        if(collision.gameObject.name.Contains("Spirit"))
+        {
+            PHealth = PHealth - 2;
+
+        }
+
+        if (collision.gameObject.name.Contains("Oni"))
+        {
+            PHealth = PHealth - 3; 
+        }
+
+        if (collision.gameObject.name.Contains("Phantom"))
+        {
+            PHealth = PHealth - 5;
+        }
+
+        if (collision.gameObject.name.Contains("Mist"))
+        {
+            PHealth = PHealth - 1;
         }
     }
 
