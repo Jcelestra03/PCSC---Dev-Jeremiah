@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4842060016274689042}
   - component: {fileID: 6073600759694854968}
   m_Layer: 0
-  m_Name: Phantom
+  m_Name: Phantom_enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   movementspeed: 2
   playertarget: {fileID: 0}
   health: 5
+  Mist: {fileID: 4297136354351651503, guid: 6d9f422fff71fca449bb02ed61f03750, type: 3}
 --- !u!61 &2402911513002759618
 BoxCollider2D:
   m_ObjectHideFlags: 0

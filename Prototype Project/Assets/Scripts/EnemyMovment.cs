@@ -10,7 +10,7 @@ public class EnemyMovment : MonoBehaviour
     public float movementspeed = 5;
     public GameObject playertarget;
     public float health = 3;
-
+    public GameObject Mist;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +45,9 @@ public class EnemyMovment : MonoBehaviour
         MyRB.velocity = velocity;
 
         if (health <= 0)
-            Destroy(gameObject);
+        {
+            Destroy(gameObject, .2f);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -61,8 +63,16 @@ public class EnemyMovment : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name.Contains("bullet"))
+        {
             health--;
+            if  (health <= 0)
+            {
+                Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+                
+
+            }
+        }
     }
 
-
+    
 }
