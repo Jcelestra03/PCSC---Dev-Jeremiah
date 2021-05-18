@@ -195,6 +195,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+
         else if (isRamming == false && skate == false)
         {
             MyAnimator.SetBool("UsingRam", false);
@@ -263,6 +264,7 @@ public class PlayerController : MonoBehaviour
         {
             PHealth = PHealth - 1;
         }
+
     }
 
     private IEnumerator Ramming()
@@ -292,6 +294,6 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-
+        
     }
 }
