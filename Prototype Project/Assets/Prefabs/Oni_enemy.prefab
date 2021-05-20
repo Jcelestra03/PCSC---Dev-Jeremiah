@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3050827949466058301}
   - component: {fileID: 1390149291981217256}
   - component: {fileID: 8267087146052206473}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Oni_enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

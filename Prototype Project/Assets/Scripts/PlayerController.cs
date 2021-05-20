@@ -17,6 +17,14 @@ public class PlayerController : MonoBehaviour
     public int PHealth;
 
 
+
+    //default melee
+    public Transform APoint;
+    public float ARange = 0.5f;
+    public LayerMask enemyLayers;
+
+
+
     public bool shooting;
     //PowerUp1;
     public bool skate;
@@ -35,9 +43,6 @@ public class PlayerController : MonoBehaviour
     public float timer;
     public float timedifference;
 
-    //Melee section
-    public Transform attackPoint;
-    public float attackRange = .05f;
 
 
 
@@ -86,6 +91,7 @@ public class PlayerController : MonoBehaviour
         mouseposition.x = Input.mousePosition.x;
         mouseposition.y = Input.mousePosition.y;
 
+
         /////////////////HEALTH AND DAMAGE
         ///
 
@@ -94,8 +100,21 @@ public class PlayerController : MonoBehaviour
         if (PHealth <= 0)
         {
             PHealth = 10;
-
+            transform.SetPositionAndRotation(new Vector2(), new Quaternion());
         }
+
+
+
+        /////////////////Melee default
+        ///
+
+
+
+        if (Input.GetKeyDown(KeyCode.E) && powerON == false)
+        {
+            Attack();
+        }
+
 
 
 
@@ -151,8 +170,12 @@ public class PlayerController : MonoBehaviour
         /////////////////SHOOTING POWER UP
         ///
 
-            if (ammo <= 0)
+        if (ammo <= 0)
+        {
             shooting = false;
+            powerON = false;
+        }
+            
 
         if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
         {
@@ -294,6 +317,19 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(APoint.position, ARange, enemyLayers);
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("We hit" + enemy.name);
+        }
+    }
+
+
+    void OnDrawGizmosSelected()
+    {
+        if (APoint == null)
+            return;
+        Gizmos.DrawWireSphere(APoint.position, ARange);
     }
 }
