@@ -1163,6 +1163,7 @@ MonoBehaviour:
   jumpheight: 6.5
   groundDetectDistance: 0.1
   flip: 0
+  PHealth: 0
   shooting: 0
   skate: 0
   Ram: 0
@@ -1172,7 +1173,6 @@ MonoBehaviour:
   bullet: {fileID: 6852671785968646177, guid: 9e065bdb2025397488c470ddd7a00c35, type: 3}
   ammo: 0
   ramspeed: 0
-  isramming: 0
   timer: 0
   timedifference: 0
   attackPoint: {fileID: 0}
