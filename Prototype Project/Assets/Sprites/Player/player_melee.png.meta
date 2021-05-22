@@ -1,34 +1,22 @@
 fileFormatVersion: 2
-guid: 07ab6051e83e0a54cbb30f240b7d90cd
+guid: 70119d42981eb194c92e193fc1841e3b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1027929264429152097
-    second: shopping cart (possessed)_0
+      213: 1397128491406161810
+    second: player_melee_0
   - first:
-      213: -2015165557902913291
-    second: shopping cart (possessed)_1
+      213: 8017209531710792087
+    second: player_melee_1
   - first:
-      213: -5847411269252673877
-    second: shopping cart (possessed)_2
+      213: -6385875407274890902
+    second: player_melee_2
   - first:
-      213: 1003642793506581162
-    second: shopping cart (possessed)_3
+      213: -8969188370868246461
+    second: player_melee_3
   - first:
-      213: -6455693901385079793
-    second: shopping cart (possessed)_4
-  - first:
-      213: -6928749826158418233
-    second: shopping cart (possessed)_5
-  - first:
-      213: -6848774965277665794
-    second: shopping cart (possessed)_6
-  - first:
-      213: -3821107386032113800
-    second: shopping cart (possessed)_7
-  - first:
-      213: -3442547882288236045
-    second: shopping cart (possessed)_8
+      213: 1674311945277503258
+    second: player_melee_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -128,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shopping cart (possessed)_0
+      name: player_melee_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 164
-        width: 71
-        height: 82
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16737844830f34e00800000000000000
-      internalID: 1027929264429152097
+      spriteID: 29777dbe5f8936310800000000000000
+      internalID: 1397128491406161810
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopping cart (possessed)_1
+      name: player_melee_1
       rect:
         serializedVersion: 2
-        x: 71
-        y: 164
-        width: 71
-        height: 82
+        x: 64
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,41 +151,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f058951a91b804e0800000000000000
-      internalID: -2015165557902913291
+      spriteID: 7916f739799d24f60800000000000000
+      internalID: 8017209531710792087
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopping cart (possessed)_2
-      rect:
-        serializedVersion: 2
-        x: 142
-        y: 164
-        width: 71
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bae04987e62d9dea0800000000000000
-      internalID: -5847411269252673877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: shopping cart (possessed)_3
+      name: player_melee_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 82
-        width: 71
-        height: 82
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,20 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aaa275c9dc7aded00800000000000000
-      internalID: 1003642793506581162
+      spriteID: a692a71a620d067a0800000000000000
+      internalID: -6385875407274890902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopping cart (possessed)_4
+      name: player_melee_3
       rect:
         serializedVersion: 2
-        x: 71
-        y: 82
-        width: 71
-        height: 82
+        x: 64
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,41 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f046945b994c866a0800000000000000
-      internalID: -6455693901385079793
+      spriteID: 34865de82ba078380800000000000000
+      internalID: -8969188370868246461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopping cart (possessed)_5
-      rect:
-        serializedVersion: 2
-        x: 142
-        y: 82
-        width: 71
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c627424eb228df90800000000000000
-      internalID: -6928749826158418233
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: shopping cart (possessed)_6
+      name: player_melee_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 71
-        height: 82
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,50 +214,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef55908947344f0a0800000000000000
-      internalID: -6848774965277665794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: shopping cart (possessed)_7
-      rect:
-        serializedVersion: 2
-        x: 71
-        y: 0
-        width: 71
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8773fe6d313b8fac0800000000000000
-      internalID: -3821107386032113800
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: shopping cart (possessed)_8
-      rect:
-        serializedVersion: 2
-        x: 142
-        y: 0
-        width: 71
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f9bfe1c0fc9930d0800000000000000
-      internalID: -3442547882288236045
+      spriteID: a177575e7d95c3710800000000000000
+      internalID: 1674311945277503258
       vertices: []
       indices: 
       edges: []

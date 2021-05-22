@@ -950,7 +950,7 @@ MonoBehaviour:
   flip: 0
   PHealth: 0
   APoint: {fileID: 1645873076}
-  ARange: 0.49
+  ARange: 0.55
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
