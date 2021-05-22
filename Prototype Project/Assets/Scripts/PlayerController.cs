@@ -44,13 +44,20 @@ public class PlayerController : MonoBehaviour
     public float timedifference;
 
 
-
+    public int attackdamage = 2;
 
     public bool powerON;
 
-
     //ANIMATIONS GO HERE VVVVVVVV
     private Animator MyAnimator;
+
+
+    public GameObject spawnPoint;
+
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +76,15 @@ public class PlayerController : MonoBehaviour
         MyAnimator = GetComponent<Animator>();
         PHealth = 10;
     }
+
+
+
+
+
+
+
+
+
 
     // Update is called once per frame
     void Update()
@@ -100,7 +116,7 @@ public class PlayerController : MonoBehaviour
         if (PHealth <= 0)
         {
             PHealth = 10;
-            transform.SetPositionAndRotation(new Vector2(), new Quaternion());
+            transform.position = spawnPoint.transform.position; 
         }
 
 
@@ -232,6 +248,20 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
@@ -301,19 +331,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private IEnumerator cooldownRam()
-    {
-        timedifference = .75f;
-        timer = 0;
-        timer += Time.deltaTime;
-            
-        if (timer >= timedifference)
-        {
-            movementspeed = 4;
-            timer = 0;
-            yield return movementspeed;
-        }
-    }
 
     void Attack()
     {
@@ -321,6 +338,7 @@ public class PlayerController : MonoBehaviour
 
         foreach(Collider2D enemy in hitEnemies)
         {
+            enemy.GetComponent<EnemyMovment>().TakeDamage(attackdamage);
             Debug.Log("We hit" + enemy.name);
         }
     }

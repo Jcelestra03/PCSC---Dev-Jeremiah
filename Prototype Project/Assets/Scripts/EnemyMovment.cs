@@ -44,10 +44,7 @@ public class EnemyMovment : MonoBehaviour
         }
         MyRB.velocity = velocity;
 
-        if (health <= 0)
-        {
-            Destroy(gameObject, .2f);
-        }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -60,19 +57,37 @@ public class EnemyMovment : MonoBehaviour
         if (isfollowing && (collision.gameObject.name == "Player"))
             isfollowing = false;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.name.Contains("bullet"))
+    //    {
+    //        health--;
+    //        if  (health <= 0)
+    //        {
+    //            Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+    //            
+    //
+    //        }
+    //    }
+    //}
+
+    public void TakeDamage(int damage)
     {
-        if (collision.gameObject.name.Contains("bullet"))
+        health -= damage;
+
+        if(health <= 0)
         {
-            health--;
-            if  (health <= 0)
-            {
-                Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
-                
-
-            }
+            Die();
         }
-    }
 
+    }
     
+    void Die()
+    {
+        Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+
+        Destroy(gameObject, 0.02f);
+
+    }
 }
