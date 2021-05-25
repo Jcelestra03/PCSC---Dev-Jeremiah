@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
         else
             movementspeed = 4;
 
-        if (skate == true && Input.GetKeyDown(KeyCode.Mouse1))
+        if (skate == true && Input.GetKeyDown(KeyCode.E))
         {
             Attack();
         }
