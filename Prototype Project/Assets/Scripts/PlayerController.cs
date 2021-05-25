@@ -31,7 +31,14 @@ public class PlayerController : MonoBehaviour
     //PowerUp2;
     public bool Ram;
     public bool isRamming;
-    //PowerUp2;
+    //PowerUp3;
+    public bool Baseball;
+    //PowerUp4;
+    public bool StopSign;
+    //PowerUp5;
+
+
+
 
     public float bulletLifespan = 1;
     public float bulletspeed = 5;
@@ -132,6 +139,19 @@ public class PlayerController : MonoBehaviour
         }
 
 
+
+        /////////////////Melee (Baseball)
+        ///
+
+
+
+        if (Baseball == true)
+        {
+            ARange = 0.8f;
+        }
+
+        else if (Baseball == false)
+            ARange = 0.55f;
 
 
         /////////////////SKATE POWER UP
@@ -274,6 +294,8 @@ public class PlayerController : MonoBehaviour
             powerON = true;
             skate = false;
             Ram = false;
+            Baseball = false;
+            StopSign = false;
             ammo = 5;
         }
 
@@ -284,6 +306,8 @@ public class PlayerController : MonoBehaviour
             powerON = true;
             shooting = false;
             Ram = false;
+            Baseball = false;
+            StopSign = false;
         }
 
         if (collision.gameObject.name.Contains("Powerup3"))
@@ -292,6 +316,29 @@ public class PlayerController : MonoBehaviour
             powerON = true;
             skate = false;
             shooting = false;
+            Baseball = false;
+            StopSign = false;
+        }
+
+        if (collision.gameObject.name.Contains("Powerup4"))
+        {
+            Baseball = true;
+            powerON = true;
+            skate = false;
+            Ram = false;
+            shooting = false;
+            StopSign = false;
+        }
+
+        if (collision.gameObject.name.Contains("Powerup5"))
+        {
+            StopSign = true;
+            powerON = true;
+            shooting = false;
+            skate = false;
+            Ram = false;
+            Baseball = false;
+
         }
 
         //////////////////////////PLAYER DAMAGE 

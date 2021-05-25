@@ -90,4 +90,9 @@ public class EnemyMovment : MonoBehaviour
         Destroy(gameObject, 0.02f);
 
     }
+
+    public void Freeze()
+    {
+
+    }
 }
