@@ -11,6 +11,9 @@ public class EnemyMovment : MonoBehaviour
     public GameObject playertarget;
     public float health = 3;
     public GameObject Mist;
+    public bool stopped;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +21,6 @@ public class EnemyMovment : MonoBehaviour
         MyRB = GetComponent<Rigidbody2D>();
 
         playertarget = GameObject.Find("Player");
-
 
     }
 
@@ -45,32 +47,48 @@ public class EnemyMovment : MonoBehaviour
         MyRB.velocity = velocity;
 
 
+        if (GameObject.Find("Player").GetComponent<PlayerController>().Stop == false)
+        {
+            stopped = false;
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isfollowing && (collision.gameObject.name == "Player"))
             isfollowing = true;
+
+        if (collision.gameObject.name.Contains("Radar") && GameObject.Find("Player").GetComponent<PlayerController>().Stop == true)
+        {
+            stopped = true;
+            StartCoroutine("Freeze");
+
+        }
+        
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
 
         if (isfollowing && (collision.gameObject.name == "Player"))
             isfollowing = false;
+
     }
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.name.Contains("bullet"))
-    //    {
-    //        health--;
-    //        if  (health <= 0)
-    //        {
-    //            Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
-    //            
-    //
-    //        }
-    //    }
-    //}
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Contains("bullet"))
+        {
+            health--;
+            if  (health <= 0)
+            {
+                Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+                
+    
+            }
+        }
+    }
 
     public void TakeDamage(int damage)
     {
@@ -91,8 +109,18 @@ public class EnemyMovment : MonoBehaviour
 
     }
 
-    public void Freeze()
+    private IEnumerator Freeze()
     {
 
+
+        while (stopped == true)
+        {
+
+            isfollowing = false;
+
+            yield return null;
+        }
+
+        
     }
 }

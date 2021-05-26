@@ -50,16 +50,21 @@ public class PlayerController : MonoBehaviour
     public float timer;
     public float timedifference;
 
+    public float Durability;
+
 
     public int attackdamage = 2;
+
+    public bool Stop;
 
     public bool powerON;
 
     //ANIMATIONS GO HERE VVVVVVVV
     private Animator MyAnimator;
 
-
+    //
     public GameObject spawnPoint;
+    //
 
 
 
@@ -76,7 +81,7 @@ public class PlayerController : MonoBehaviour
         skate = false;
         //PowerUp2 = false;
         flip = false;
-        ramspeed = 50;
+        ramspeed = 60;
         timer = 0;
         timedifference = 1.2f;
         //Animation
@@ -99,7 +104,7 @@ public class PlayerController : MonoBehaviour
         /////////////////BASIC MOVEMENT
         velocity = myRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * movementspeed;
-
+        
 
         groundDetection = new Vector2(transform.position.x, transform.position.y - 1.1f);
 
@@ -117,12 +122,12 @@ public class PlayerController : MonoBehaviour
         /////////////////HEALTH AND DAMAGE
         ///
 
-        
+
 
         if (PHealth <= 0)
         {
             PHealth = 10;
-            transform.position = spawnPoint.transform.position; 
+            transform.position = spawnPoint.transform.position;
         }
 
 
@@ -138,7 +143,7 @@ public class PlayerController : MonoBehaviour
             Attack();
         }
 
-        
+
 
         /////////////////Melee (Baseball)
         ///
@@ -148,18 +153,62 @@ public class PlayerController : MonoBehaviour
         if (Baseball == true)
         {
             ARange = 0.8f;
+            attackdamage = 4;
         }
 
         else if (Baseball == false)
+        {
             ARange = 0.55f;
+            attackdamage = 2;
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && Baseball == true)
+        {
+            Attack();
+
+        }
+
+        if (Durability <= 0)
+            powerON = false;
+        /////////////////StopSign POWER UP
+        ///
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && StopSign == true)
+        {
+            Stop = true;
+            
+            timedifference = 3;
+        }
+        if (StopSign == false)
+        {
+            Stop = false;
+            timer = 0;
+        }
+        else if (Durability <= 0)
+        {
+            StopSign = false;
+        }
+        if (Stop == true)
+        {
+            timer += Time.deltaTime;
+            if (timer > timedifference)
+            {
+                Durability--;
+                Stop = false;
+                timer = 0;
+            }
+        }
 
 
         /////////////////SKATE POWER UP
         ///
 
+
+
         if (skate == true)
         {
-            movementspeed = 7;
+            movementspeed = 8;
             MyAnimator.SetBool("UsingSkateboard", true);
         }
 
@@ -175,6 +224,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
+
         /////////////////FLIP
         ///
 
@@ -183,7 +233,7 @@ public class PlayerController : MonoBehaviour
             //MyAnimator.SetBool("WalkingSide", true);
             flip = true;
             GetComponent<SpriteRenderer>().flipX = true;
-            ramspeed = -9;
+            ramspeed = -10;
         }
 
         else if (myRB.velocity.x > 0)
@@ -191,7 +241,7 @@ public class PlayerController : MonoBehaviour
             //MyAnimator.SetBool("WalkingSide", true);
             flip = false;
             GetComponent<SpriteRenderer>().flipX = false;
-            ramspeed = 9;
+            ramspeed = 10;
         }
 
         else if (myRB.velocity.x == 0)
@@ -209,15 +259,20 @@ public class PlayerController : MonoBehaviour
                 MyAnimator.SetBool("WalkingSide", true);
             }
         }
+
+
+
         /////////////////SHOOTING POWER UP
         ///
+
+
 
         if (ammo <= 0)
         {
             shooting = false;
             powerON = false;
         }
-            
+
 
         if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
         {
@@ -245,7 +300,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Ram == false)
             isRamming = false;
-        
+
         if (isRamming == true)
         {
             movementspeed = 0;
@@ -305,8 +360,8 @@ public class PlayerController : MonoBehaviour
             ammo = 5;
         }
 
-       
-        if(collision.gameObject.name.Contains("Powerup2") && isRamming == false)
+
+        if (collision.gameObject.name.Contains("Powerup2") && isRamming == false)
         {
             skate = true;
             powerON = true;
@@ -334,6 +389,7 @@ public class PlayerController : MonoBehaviour
             Ram = false;
             shooting = false;
             StopSign = false;
+            Durability = 8;
         }
 
         if (collision.gameObject.name.Contains("Powerup5"))
@@ -344,13 +400,14 @@ public class PlayerController : MonoBehaviour
             skate = false;
             Ram = false;
             Baseball = false;
+            Durability = 2;
 
         }
 
         //////////////////////////PLAYER DAMAGE 
         ///
 
-        if(collision.gameObject.name.Contains("Spirit"))
+        if (collision.gameObject.name.Contains("Spirit"))
         {
             PHealth = PHealth - 2;
 
@@ -358,7 +415,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.name.Contains("Oni"))
         {
-            PHealth = PHealth - 3; 
+            PHealth = PHealth - 3;
         }
 
         if (collision.gameObject.name.Contains("Phantom"))
@@ -384,15 +441,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(APoint.position, ARange, enemyLayers);
 
-        foreach(Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemy in hitEnemies)
         {
             enemy.GetComponent<EnemyMovment>().TakeDamage(attackdamage);
             Debug.Log("We hit" + enemy.name);
+            if (Baseball == true)
+            {
+                Durability--;
+            }
         }
     }
 
