@@ -99,17 +99,16 @@ public class PlayerController : MonoBehaviour
         /////////////////BASIC MOVEMENT
         velocity = myRB.velocity;
         velocity.x = Input.GetAxisRaw("Horizontal") * movementspeed;
-        
+
 
         groundDetection = new Vector2(transform.position.x, transform.position.y - 1.1f);
 
         if (Input.GetKeyDown(KeyCode.Space) && Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance))
         {
-            
+            MyAnimator.SetBool("IsJumping", true);
             velocity.y = jumpheight;
         }
 
-        
 
         mouseposition.x = Input.mousePosition.x;
         mouseposition.y = Input.mousePosition.y;
@@ -135,10 +134,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && powerON == false)
         {
+            MyAnimator.SetBool("IsPunching", true);
             Attack();
         }
 
-
+        
 
         /////////////////Melee (Baseball)
         ///
@@ -158,15 +158,21 @@ public class PlayerController : MonoBehaviour
         ///
 
         if (skate == true)
+        {
             movementspeed = 7;
+            MyAnimator.SetBool("UsingSkateboard", true);
+        }
+
         else
+        {
             movementspeed = 4;
+            MyAnimator.SetBool("UsingSkateboard", false);
+        }
 
         if (skate == true && Input.GetKeyDown(KeyCode.E))
         {
             Attack();
         }
-
 
 
         /////////////////FLIP
