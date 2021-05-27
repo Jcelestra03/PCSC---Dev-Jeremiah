@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public Transform APoint;
     public float ARange = 0.5f;
     public LayerMask enemyLayers;
-
+    public bool Punching;
 
 
     public bool shooting;
@@ -108,6 +108,17 @@ public class PlayerController : MonoBehaviour
 
         groundDetection = new Vector2(transform.position.x, transform.position.y - 1.1f);
 
+        if (myRB.velocity.y <0)
+        {
+            MyAnimator.SetBool("IsJumping", false);
+        }
+
+        if (myRB.velocity.x > 0 && Input.GetKeyDown(KeyCode.Space) && Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance))
+        {
+            MyAnimator.SetBool("IsJumping", true);
+            MyAnimator.SetBool("WalkingSide", false);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && Physics2D.Raycast(groundDetection, Vector2.down, groundDetectDistance))
         {
             MyAnimator.SetBool("IsJumping", true);
@@ -139,11 +150,22 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && powerON == false)
         {
+            timer = 0;
+            timedifference = 1;
             MyAnimator.SetBool("IsPunching", true);
             Attack();
+            Punching = true;
         }
 
-
+        if (Punching == true)
+        {
+            timer += Time.deltaTime;
+            if (timer >= timedifference)
+            {
+                Punching = false;
+                MyAnimator.SetBool("IsPunching", false);
+            }
+        }
 
         /////////////////Melee (Baseball)
         ///
@@ -179,11 +201,11 @@ public class PlayerController : MonoBehaviour
             Stop = true;
             
             timedifference = 3;
+            timer = 0;
         }
         if (StopSign == false)
         {
             Stop = false;
-            timer = 0;
         }
         else if (Durability <= 0)
         {
@@ -205,8 +227,7 @@ public class PlayerController : MonoBehaviour
         ///
 
 
-
-        if (skate == true)
+        if (skate == true && myRB.velocity.x > 0)
         {
             movementspeed = 8;
             MyAnimator.SetBool("UsingSkateboard", true);
@@ -250,11 +271,11 @@ public class PlayerController : MonoBehaviour
         }
         if (isRamming == false)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) && skate == false)
             {
                 MyAnimator.SetBool("WalkingSide", true);
             }
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && skate == false)
             {
                 MyAnimator.SetBool("WalkingSide", true);
             }
@@ -454,6 +475,8 @@ public class PlayerController : MonoBehaviour
                 Durability--;
             }
         }
+
+
     }
 
 
