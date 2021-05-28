@@ -150,9 +150,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && powerON == false)
         {
+MyAnimator.SetBool("IsPunching", true);
             timer = 0;
             timedifference = 1;
-            MyAnimator.SetBool("IsPunching", true);
+            
             Attack();
             Punching = true;
         }
@@ -228,7 +229,7 @@ public class PlayerController : MonoBehaviour
         ///
 
 
-        if (skate == true && myRB.velocity.x > 0)
+        if (skate == true && (myRB.velocity.x > 0 || myRB.velocity.x < 0))
         {
             movementspeed = 8;
             MyAnimator.SetBool("UsingSkateboard", true);
@@ -289,13 +290,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (ammo <= 0)
-        {
-            shooting = false;
-            powerON = false;
-        }
-        else if (ammo >= 0)
-            powerON = true;
 
         if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
         {
@@ -305,7 +299,13 @@ public class PlayerController : MonoBehaviour
             Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<PolygonCollider2D>());
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
-
+            if (ammo <= 0)
+            {
+                shooting = false;
+                powerON = false;
+            }
+            else if (ammo >= 0)
+                powerON = true;
 
             b.GetComponent<Rigidbody2D>().velocity = new Vector2(lookPos.x * bulletspeed, lookPos.y * bulletspeed);
             Destroy(b, bulletLifespan);
