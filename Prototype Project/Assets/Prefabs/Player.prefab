@@ -124,21 +124,31 @@ MonoBehaviour:
   jumpheight: 6.5
   groundDetectDistance: 0.1
   flip: 0
+  PHealth: 0
+  APoint: {fileID: 0}
+  ARange: 0.5
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  Punching: 0
   shooting: 0
   skate: 0
   Ram: 0
   isRamming: 0
+  Baseball: 0
+  StopSign: 0
   bulletLifespan: 1
   bulletspeed: 5
   bullet: {fileID: 6852671785968646177, guid: 9e065bdb2025397488c470ddd7a00c35, type: 3}
   ammo: 0
   ramspeed: 0
-  isramming: 0
   timer: 0
   timedifference: 0
-  attackPoint: {fileID: 0}
-  attackRange: 0.05
+  Durability: 0
+  attackdamage: 2
+  Stop: 0
   powerON: 0
+  spawnPoint: {fileID: 0}
 --- !u!58 &6510299057426932476
 CircleCollider2D:
   m_ObjectHideFlags: 0
