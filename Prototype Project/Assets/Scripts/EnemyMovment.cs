@@ -51,6 +51,7 @@ public class EnemyMovment : MonoBehaviour
         {
             stopped = false;
         }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -83,10 +84,11 @@ public class EnemyMovment : MonoBehaviour
             health--;
             if  (health <= 0)
             {
-                Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+                Die();
                 
-    
             }
+
+
         }
     }
 

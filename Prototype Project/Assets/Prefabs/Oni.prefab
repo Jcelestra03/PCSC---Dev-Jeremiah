@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 212cf0a4451e77c498242cac87c60eb4, type: 3}
   m_Color: {r: 0.9433962, g: 0.5824288, b: 0, a: 1}
   m_FlipX: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   playertarget: {fileID: 0}
   health: 1
   Mist: {fileID: 4297136354351651503, guid: 6d9f422fff71fca449bb02ed61f03750, type: 3}
+  stopped: 0
 --- !u!61 &3050827949466058301
 BoxCollider2D:
   m_ObjectHideFlags: 0
