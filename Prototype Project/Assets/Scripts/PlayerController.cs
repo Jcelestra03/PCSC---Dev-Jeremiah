@@ -191,8 +191,9 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (Durability <= 0)
+        if (Durability <= 0 && (Baseball == true || StopSign == true))
             powerON = false;
+
         /////////////////StopSign POWER UP
         ///
 
@@ -293,7 +294,8 @@ public class PlayerController : MonoBehaviour
             shooting = false;
             powerON = false;
         }
-
+        else if (ammo >= 0)
+            powerON = true;
 
         if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
         {
