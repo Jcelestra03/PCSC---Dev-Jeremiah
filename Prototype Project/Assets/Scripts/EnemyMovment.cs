@@ -12,6 +12,21 @@ public class EnemyMovment : MonoBehaviour
     public float health = 3;
     public GameObject Mist;
     public bool stopped;
+    public bool enemy1;
+    public bool enemy2;
+    public bool enemy3;
+
+    //enemysounds
+    public AudioClip enemyCrying;
+    public AudioClip enemyAttack;
+    public AudioClip heavyCrying;
+    public AudioClip heavyAttack;
+    public AudioClip speedyCrying;
+    public AudioClip speedyAttack;
+    public AudioClip enemyDeath;
+    private float timer;
+    private float timedifference;
+    private AudioSource Speaker;
 
 
     // Start is called before the first frame update
@@ -20,6 +35,10 @@ public class EnemyMovment : MonoBehaviour
         MyRB = GetComponent<Rigidbody2D>();
 
         playertarget = GameObject.Find("Player");
+
+        timer = 0;
+
+        timedifference = 3;
 
     }
 
@@ -50,6 +69,43 @@ public class EnemyMovment : MonoBehaviour
         {
             stopped = false;
         }
+
+        if (enemy1 == true)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timedifference)
+            {
+                Speaker.clip = enemyCrying;
+                Speaker.play();
+                timer = 0;
+            }
+        }
+
+        if (enemy2 == true)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timedifference)
+            {
+                Speaker.clip = heavyCrying;
+                Speaker.play();
+                timer = 0;
+            }
+        }
+
+        if (enemy3 == true)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timedifference)
+            {
+                Speaker.clip = speedyCrying;
+                Speaker.play();
+                timer = 0;
+            }
+        }
+
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -91,6 +147,20 @@ public class EnemyMovment : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Contains("player"))
+        {
+            if (enemy1 == true)
+            {
+                Speaker.clip = enemyDeath;
+                Speaker.play();
+            }
+        
+        }
+
+    }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
@@ -105,6 +175,10 @@ public class EnemyMovment : MonoBehaviour
     void Die()
     {
         Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+
+        Speeker.clip = enemyDeath;
+        Speaker.play();
+        
 
         Destroy(gameObject, 0.02f);
 
@@ -124,4 +198,6 @@ public class EnemyMovment : MonoBehaviour
 
         
     }
+
+
 }
