@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && powerON == false)
         {
-MyAnimator.SetBool("IsPunching", true);
+            MyAnimator.SetBool("IsPunching", true);
             timer = 0;
             timedifference = 1;
             
@@ -175,6 +175,7 @@ MyAnimator.SetBool("IsPunching", true);
 
         if (Baseball == true)
         {
+            MyAnimator.SetBool("IsBaseball", true);
             ARange = 0.8f;
             attackdamage = 4;
         }
@@ -183,13 +184,13 @@ MyAnimator.SetBool("IsPunching", true);
         {
             ARange = 0.55f;
             attackdamage = 2;
-            
+            MyAnimator.SetBool("IsBaseball", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && Baseball == true)
         {
             Attack();
-
+            MyAnimator.SetBool("IsBaseballSwing", true);
         }
 
         if (Durability <= 0 && (Baseball == true || StopSign == true))
@@ -207,6 +208,7 @@ MyAnimator.SetBool("IsPunching", true);
         }
         if (StopSign == false)
         {
+            MyAnimator.SetBool("IsStopSign", false);
             Stop = false;
         }
         else if (Durability <= 0)
@@ -215,9 +217,11 @@ MyAnimator.SetBool("IsPunching", true);
         }
         if (Stop == true)
         {
+            MyAnimator.SetBool("StopSignSwing", true);
             timer += Time.deltaTime;
             if (timer > timedifference)
             {
+                MyAnimator.SetBool("StopSignSwing", false);
                 Durability--;
                 Stop = false;
                 timer = 0;
@@ -273,11 +277,11 @@ MyAnimator.SetBool("IsPunching", true);
         }
         if (isRamming == false)
         {
-            if (Input.GetKeyDown(KeyCode.D) && skate == false)
+            if (Input.GetKeyDown(KeyCode.D) && skate == false && StopSign == false)
             {
                 MyAnimator.SetBool("WalkingSide", true);
             }
-            if (Input.GetKeyDown(KeyCode.A) && skate == false)
+            if (Input.GetKeyDown(KeyCode.A) && skate == false && StopSign == false)
             {
                 MyAnimator.SetBool("WalkingSide", true);
             }
@@ -381,6 +385,9 @@ MyAnimator.SetBool("IsPunching", true);
             Baseball = false;
             StopSign = false;
             ammo = 5;
+
+
+
         }
 
 
@@ -413,6 +420,8 @@ MyAnimator.SetBool("IsPunching", true);
             shooting = false;
             StopSign = false;
             Durability = 8;
+
+            MyAnimator.SetBool("IsBaseball", true);
         }
 
         if (collision.gameObject.name.Contains("Powerup5"))
@@ -424,6 +433,8 @@ MyAnimator.SetBool("IsPunching", true);
             Ram = false;
             Baseball = false;
             Durability = 2;
+
+            MyAnimator.SetBool("IsStopSign", true);
 
         }
 
@@ -472,8 +483,10 @@ MyAnimator.SetBool("IsPunching", true);
         {
             enemy.GetComponent<EnemyMovment>().TakeDamage(attackdamage);
             Debug.Log("We hit" + enemy.name);
+            MyAnimator.SetBool("IsBaseballSwing", false);
             if (Baseball == true)
             {
+                
                 Durability--;
             }
         }
