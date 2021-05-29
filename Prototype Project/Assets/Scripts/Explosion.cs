@@ -7,9 +7,20 @@ public class Explosion : MonoBehaviour
     // Start is called before the first frame update
     public float LifeSpan = 2;
     public float timer = 0;
+
+
+    private AudioSource speaker;
+
+    public AudioClip Texplosion;
+
+
     void Start()
     {
-        
+
+        speaker = GetComponent<AudioSource>();
+
+        speaker.clip = Texplosion;
+        speaker.Play();
     }
 
     // Update is called once per frame

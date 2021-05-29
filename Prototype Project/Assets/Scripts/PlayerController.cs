@@ -68,8 +68,14 @@ public class PlayerController : MonoBehaviour
 
 
 
+    //Audio shit
+    private AudioSource speaker;
 
 
+    public AudioClip swingbaseball;
+    public AudioClip possession;
+    public AudioClip Tbullet;
+    public AudioClip freeze;
 
     // Start is called before the first frame update
     void Start()
@@ -87,6 +93,8 @@ public class PlayerController : MonoBehaviour
         //Animation
         MyAnimator = GetComponent<Animator>();
         PHealth = 10;
+
+        speaker = GetComponent<AudioSource>();
     }
 
 
@@ -189,6 +197,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && Baseball == true)
         {
+            speaker.clip = swingbaseball;
+            speaker.Play();
+
             Attack();
             MyAnimator.SetBool("IsBaseballSwing", true);
         }
@@ -202,7 +213,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) && StopSign == true)
         {
             Stop = true;
-            
+            speaker.clip = freeze;
+            speaker.Play();
+
             timedifference = 3;
             timer = 0;
         }
@@ -297,6 +310,11 @@ public class PlayerController : MonoBehaviour
 
         if (shooting == true && (Input.GetKeyDown(KeyCode.Mouse1)) && ammo >= 0)
         {
+
+            speaker.clip = Tbullet;
+            speaker.Play();
+
+
             ammo = ammo - 1;
             GameObject b = Instantiate(bullet, gameObject.transform);
             //Physics2D.IgnoreCollision(b.GetComponent<CircleCollider2D>(), GetComponent<CircleCollider2D>());
@@ -376,6 +394,7 @@ public class PlayerController : MonoBehaviour
         /////////////////////////PICK UPS
         ///
 
+
         if (collision.gameObject.name.Contains("Powerup1"))
         {
             shooting = true;
@@ -386,6 +405,8 @@ public class PlayerController : MonoBehaviour
             StopSign = false;
             ammo = 5;
 
+            speaker.clip = possession;
+            speaker.Play();
 
 
         }
@@ -399,6 +420,9 @@ public class PlayerController : MonoBehaviour
             Ram = false;
             Baseball = false;
             StopSign = false;
+
+            speaker.clip = possession;
+            speaker.Play();
         }
 
         if (collision.gameObject.name.Contains("Powerup3"))
@@ -409,6 +433,9 @@ public class PlayerController : MonoBehaviour
             shooting = false;
             Baseball = false;
             StopSign = false;
+
+            speaker.clip = possession;
+            speaker.Play();
         }
 
         if (collision.gameObject.name.Contains("Powerup4"))
@@ -422,6 +449,9 @@ public class PlayerController : MonoBehaviour
             Durability = 8;
 
             MyAnimator.SetBool("IsBaseball", true);
+
+            speaker.clip = possession;
+            speaker.Play();
         }
 
         if (collision.gameObject.name.Contains("Powerup5"))
@@ -435,6 +465,9 @@ public class PlayerController : MonoBehaviour
             Durability = 2;
 
             MyAnimator.SetBool("IsStopSign", true);
+
+            speaker.clip = possession;
+            speaker.Play();
 
         }
 

@@ -14,13 +14,37 @@ public class EnemyMovment : MonoBehaviour
     public bool stopped;
 
 
+    private float timer;
+    private float timedifference = 2.5f;
+
+
+    public bool enemy1;
+    public bool enemy2;
+    public bool enemy3;
+
+
+
+    private AudioSource speaker;
+    public AudioClip enemyhurt;
+    public AudioClip cry1;
+    public AudioClip cry2;
+    public AudioClip cry3;
+    public AudioClip attack1;
+    public AudioClip attack2;
+    public AudioClip attack3;
+    public AudioClip diecry;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        speaker = GetComponent<AudioSource>();
+
+
         MyRB = GetComponent<Rigidbody2D>();
 
         playertarget = GameObject.Find("Player");
-
+        timer = 0;
     }
 
     // Update is called once per frame
@@ -51,6 +75,44 @@ public class EnemyMovment : MonoBehaviour
             stopped = false;
         }
 
+
+
+
+
+        if (enemy1 == true)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timedifference)
+            {
+                speaker.clip = cry1;
+                speaker.Play();
+            }
+        }
+
+        if (enemy2 == true)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timedifference)
+            {
+                speaker.clip = cry2;
+                speaker.Play();
+            }
+
+        }
+
+        if (enemy3 == true)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timedifference)
+            {
+                speaker.clip = cry3;
+                speaker.Play();
+            }
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -73,27 +135,59 @@ public class EnemyMovment : MonoBehaviour
             isfollowing = false;
 
     }
-
-
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name.Contains("bullet"))
+
+        if (collision.gameObject.name.Contains("Player"))
         {
-            health--;
-            if  (health <= 0)
+
+            if (enemy1 == true)
             {
-                Die();
-                
+
+                    speaker.clip = attack1;
+                    speaker.Play();
+
             }
 
+            if (enemy2 == true)
+            {
 
+                speaker.clip = attack2;
+                speaker.Play();
+
+            }
+
+            if (enemy3 == true)
+            {
+
+                speaker.clip = attack3;
+                speaker.Play();
+
+            }
         }
+
+            if (collision.gameObject.name.Contains("bullet"))
+            {
+                health--;
+                if  (health <= 0)
+                {
+
+                    Die();
+                
+                }
+
+
+            }
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
+
+        speaker.clip = enemyhurt;
+        speaker.Play();
 
         if(health <= 0)
         {
@@ -104,7 +198,16 @@ public class EnemyMovment : MonoBehaviour
     
     void Die()
     {
+
+
         Instantiate(Mist, gameObject.transform.position, Quaternion.identity);
+
+
+
+
+        speaker.clip = diecry;
+
+        speaker.Play();
 
         Destroy(gameObject, 0.02f);
 
